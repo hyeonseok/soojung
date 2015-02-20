@@ -31,7 +31,7 @@ category
 <table class="entries">
     <tr>
         <th class="subject">Subject</th>
-        <th class="date">Date</td>	
+        <th class="date">Date</th>	
         <th class="comments">Comment</th>
         <th class="trackbacks">Trackback</th>
         <th class="trackback_ping">Ping</th>
