@@ -79,9 +79,55 @@ h2
   padding: 3px;
 }
 
+#overview div.recent-post
+{
+	width: 50%;
+	float: left;
+}
+
+#overview div.recent-comment
+{
+	width: 50%;
+	float: right;
+}
+
+#overview div.recent-trackback
+{
+	width: 50%;
+	float: left;
+	clear: both;
+}
+
+#overview div.blog-stat
+{
+	width: 50%;
+	float: right;
+}
+
+#overview table
+{
+	table-layout: fixed;
+	width: 100%;
+}
+
 #overview td
 {
   vertical-align: top;
+}
+
+#overview td.name
+{
+	width: 4em;
+}
+
+#overview td.del
+{
+	width: 1em;
+}
+
+#overview td.ping
+{
+	width: 3em;
 }
 
 tr .row:hover

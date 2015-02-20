@@ -2,10 +2,7 @@
 {include file="menu.tpl"}
 
 <div id="overview">
-    <table width="100%">
-      <tr>
-	
-	<td width="50%">
+	<div class="recent-post">
 	  <h2>Recent Posts</h2>
 	  <table>
 	    {foreach from=$recent_entries item=entry}
@@ -15,41 +12,37 @@
 		  <a href="{$baseurl}/post.php?blogid={$entry->entryId}">{$entry->title}</a>
 		</div>
 	      </td>
-	      <td width="1%">
-		<a href="{$baseurl}/admin.php?mode=delete_entry&blogid={$entry->entryId}" onclick="return confirm('Are you sure want to delete this entry?\nTitle: {$entry->title}');">X</a>
+	      <td class="del">
+		<a href="{$baseurl}/admin.php?mode=delete_entry&amp;blogid={$entry->entryId}" onclick="return confirm('Are you sure want to delete this entry?\nTitle: {$entry->title}');">X</a>
 	      </td>
-	      <td width="1%">
+	      <td class="ping">
 		<a href="{$baseurl}/sendping.php?blogid={$entry->entryId}">Ping</a>
 	      </td>
 	    </tr>
 	    {/foreach}
 	  </table>
-	</td>
-	
-	<td width="50%">
+	</div>
+	<div class="recent-comment">		
 	  <h2>Recent Comments</h2>
 	  <table>
 	    {foreach from=$recent_comments item=comment}
 	    <tr class="row">
-	      <td>
+	      <td class="name">
 		{$comment->name}
 	      </td>
 	      <td>
 		<div class="entry_title">
-		  <a href="{$comment->getHref()}">{$comment->getBody()|strip_tags:false|truncate:40}</a>
+		  <a href="{$comment->getHref()}">{$comment->getBody()|strip_tags:false}</a>
 		</div>
-	      </td>
-	      <td width="1%">
-		<a href="{$baseurl}/admin.php?mode=delete&file={$comment->filename}" onclick="return confirm('Are you sure want to delete this comment?\nAuthor: {$comment->name}');">X</a>
+	    </td>
+	      <td class="del">
+		<a href="{$baseurl}/admin.php?mode=delete&amp;file={$comment->filename}" onclick="return confirm('Are you sure want to delete this comment?\nAuthor: {$comment->name}');">X</a>
 	      </td>
 	    </tr>
 	    {/foreach}
 	  </table>
-	</td>
-      </tr>
-      
-      <tr>
-	<td width="50%">
+	</div>
+	<div class="recent-trackback">
 	  <h2>Recent Trackback</h2>
 	  <table>
 	    {foreach from=$recent_trackbacks item=trackback}
@@ -59,15 +52,14 @@
 		  <a href="{$trackback->getHref()}">{$trackback->url}</a>
 		</div>
 	      </td>
-	      <td width="1%">
-		<a href="{$baseurl}/admin.php?mode=delete&file={$trackback->filename}" onclick="return confirm('Are you sure want to delete this trackback?\nURL: {$trackback->url}');">X</a>
+	      <td class="del">
+		<a href="{$baseurl}/admin.php?mode=delete&amp;file={$trackback->filename}" onclick="return confirm('Are you sure want to delete this trackback?\nURL: {$trackback->url}');">X</a>
 	      </td>
 	    </tr>
 	    {/foreach}
 	  </table>
-	</td>
-	
-	<td width="50%">
+	</div>
+	<div class="blog-stat">
 	  <h2>Blog Stat</h2>
 	  <table>
 	    <tr>
@@ -83,9 +75,7 @@
 	      <td></td>
 	    </tr>
 	  </table>
-	</td>
-      </tr>
-    </table>
+	</div>
 </div>
 
 {include file="footer.tpl"}
