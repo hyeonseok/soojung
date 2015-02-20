@@ -6,9 +6,6 @@
 <script type="text/javascript" src="{$baseurl}/templates/admin/javascript.js"></script>
 <script type="text/javascript" src="{$baseurl}/libs/fckeditor/fckeditor.js"></script>
 <script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
-<script type="text/javascript">
-{$sajax_functions}
-</script>
 <title>Admin</title>
 </head>
 <body>

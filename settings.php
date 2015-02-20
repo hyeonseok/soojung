@@ -31,8 +31,6 @@ include_once("classes/Template.class.php");
 include_once("classes/UserTemplate.class.php");
 include_once("classes/AdminTemplate.class.php");
 
-include_once("libs/sajax-0.10/Sajax.php");
-
 if (get_magic_quotes_gpc()) {
   function stripslashes_deep($value) {
     $value = is_array($value) ?
