@@ -68,7 +68,7 @@ function changeFormat(format) {
 {if $smarty.foreach.categories.first}
 <select name="category" onchange="changePostCategory(this);">
 {/if}
-	<option value="{$cate->name}" {if $category == $cate->name}selected{/if}>{$cate->name}
+	<option value="{$cate->name}"{if $category == $cate->name} selected="selected"{/if}>{$cate->name}</option>
 {foreachelse}
 <select name="category" disabled>
 {/foreach}
@@ -79,25 +79,25 @@ function changeFormat(format) {
 <div class="row">
 <span class="label">Options:</span>
 <span class="formw">
-<input type="checkbox" name="SECRET" {if $secret}checked{/if} />SECRET
-<input type="checkbox" name="NO_COMMENT" {if $no_comment}checked{/if} />NO_COMMENT
-<input type="checkbox" name="NO_TRACKBACK" {if $no_trackback}checked{/if} />NO_TRACKBACK
-<input type="checkbox" name="STATIC" {if $static}checked{/if} />STATIC
-<input type="checkbox" name="NO_RSS" {if $no_rss}checked{/if} />NO_RSS
+	<label><input type="checkbox" name="SECRET"{if $secret} checked="checked"{/if} />SECRET</label>
+	<label><input type="checkbox" name="NO_COMMENT"{if $no_comment} checked="checked"{/if} />NO_COMMENT</label>
+	<label><input type="checkbox" name="NO_TRACKBACK"{if $no_trackback} checked="checked"{/if} />NO_TRACKBACK</label>
+	<label><input type="checkbox" name="STATIC"{if $static} checked="checked"{/if} />STATIC</label>
+	<label><input type="checkbox" name="NO_RSS"{if $no_rss} checked="checked"{/if} />NO_RSS</label>
 </span>
 </div>
   
 <div class="row">
 <span class="label">Format:</span>
 <span class="formw">
-<input type="radio" name="format" value="plain" {if $format == "plain" || $format == ""}checked{/if} onClick="changeFormat('plain');" />plain
-<input type="radio" name="format" value="html" {if $format == "html"}checked{/if} onClick="changeFormat('html')" />html
-<input type="radio" name="format" value="bbcode" {if $format == "bbcode"}checked{/if} onClick="changeFormat('bbcode');" />bbcode
-<input type="radio" name="format" value="moniwiki" {if $format == "moniwiki"}checked{/if} onClick="changeFormat('moniwiki');" />moniwiki
+	<label><input type="radio" name="format" value="plain"{if $format == "plain" || $format == ""} checked="checked"{/if} onClick="changeFormat('plain');" />plain</label>
+	<label><input type="radio" name="format" value="html"{if $format == "html"} checked="checked"{/if} onclick="changeFormat('html')" />html</label>
+	<label><input type="radio" name="format" value="bbcode"{if $format == "bbcode"} checked="checked"{/if} onclick="changeFormat('bbcode');" />bbcode</label>
+	<label><input type="radio" name="format" value="moniwiki"{if $format == "moniwiki"} checked="checked"{/if} onclick="changeFormat('moniwiki');" />moniwiki</label>
 </span>
 </div>
 
-<div class="row">
+<div id="editor" class="row">
 <span class="label">Body:</span>
 <span class="formw">
 <textarea id="body" name="body" rows="10" cols="65">{$body|escape}</textarea>
@@ -120,7 +120,7 @@ function changeFormat(format) {
 <div class="row">
 <span class="label">Upload:</span>
 <span class="formw">
-<a href="#" onClick="window.open('{$baseurl}/upload.php','blah','width=500,height=300,scrollbars=yes')">Upload Files</a>
+<a href="{$baseurl}/upload.php" onclick="window.open(this.href,'blah','width=500,height=300,scrollbars=yes'); return false;">Upload Files</a>
 </span>
 </div>
 
