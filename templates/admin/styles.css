@@ -202,16 +202,3 @@ tr .row:hover a
 {
   display:none;
 }
-
-#bookmark table
-{
-    margin: 5px 0px 5px 0px;
-    padding: 0px;
-    background: #7cb4fb;
-}
-#bookmark table td
-{
-    margin: 0px;
-    padding: 2px;
-    background: white;
-}

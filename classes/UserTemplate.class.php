@@ -32,8 +32,6 @@ class UserTemplate extends Template {
       $this->assign('recent_trackbacks', Trackback::getRecentTrackbacks(10));
       $this->assign('recent_referers', Soojung::getRecentReferers(10));
 
-      $this->assign('bookmarks', Bookmark::getBookmarkList());
-
       $year = 0;
       $month = 0;
       $day = 0;
