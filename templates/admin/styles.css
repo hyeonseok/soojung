@@ -14,6 +14,9 @@ a img
 { 
   border: 0;
 }
+textarea {
+	font-size: 1em;
+}
 
 /* tabless css */
 div.row
@@ -155,6 +158,10 @@ tr .row:hover a
   width: 70px;
 }
 
+#body___Frame {
+	height: 500px;
+}
+
 #post div.row span.formw
 {
   display: block;
@@ -169,6 +176,10 @@ tr .row:hover a
 #post #smiles {
   margin-top: 10px;
   margin-left: 80px;
+}
+
+#post #body {
+	height: 500px;
 }
 
 #post #bbcode span, #post #smiles span {
