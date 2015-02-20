@@ -51,9 +51,6 @@ class UserTemplate extends Template {
       }
       $this->assign('license_link', $license_link);
     }
-    $this->assign('counter', $counter);
-    $this->assign('today_count', $counter->today);
-    $this->assign('total_count', $counter->total);
   }
 
   function clearCache() {

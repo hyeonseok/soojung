@@ -1,9 +1,6 @@
 <?php
 include_once("settings.php");
 
-$counter = new Counter();
-$counter->update();
-
 if (isset($_GET["page"])) {
   $page = $_GET["page"];
 } else {
