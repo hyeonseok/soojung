@@ -133,7 +133,7 @@ class Trackback {
     $permlink = rawurlencode($entry->getHref());
 
     if ($entry->title != null) {
-      $tb_title = rawurlencode(iconv("UTF-8", $encoding, $entry->title));
+      $tb_title = rawurlencode(mb_convert_encoding($entry->title, "UTF-8", $encoding));
     } else {
       $tb_title = rawurlencode('title');
     }
@@ -143,16 +143,16 @@ class Trackback {
       $tb_excerpt = substring($tb_excerpt,252);
     }
 
-    $tb_excerpt = rawurlencode(iconv("UTF-8", $encoding, $tb_excerpt));
+    $tb_excerpt = rawurlencode(mb_convert_encoding($tb_excerpt, "UTF-8", $encoding));
 
     if (isset($blog_name)) {
-      $tb_blogname = rawurlencode(iconv("UTF-8", $encoding, $blog_name));
+      $tb_blogname = rawurlencode(mb_convert_encoding($blog_name, "UTF-8", $encoding));
     } else {
       $tb_blogname = rawurlencode('soojung blog');
     }
 
     $query_string = "title=$tb_title&url=$permlink&excerpt=$tb_excerpt&blog_name=$tb_blogname";
-    $query_string = iconv( "UTF-8", $encoding, $query_string);
+    $query_string = mb_convert_encoding($query_string, 'UTF-8', $encoding);
 
     # only for debugging
     #echo "query_string : $query_string<br />"; //debug code?
