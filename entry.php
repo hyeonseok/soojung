@@ -31,7 +31,7 @@ if (isset($_POST["blogid"])) {
   $entry = Entry::getEntry($blogid);
   $temp = new UserTemplate("entry.tpl", $blogid);
   $temp->clearCache();
-  header("Location: " . $entry->getHref() . "#" . $t);
+  header("Location: " . $entry->getHref() . "#CO" . $t);
   exit;
 } else if (isset($_GET["blogid"]) == false) {
   echo "<meta http-equiv='refresh' content='0;URL=index.php'>";
