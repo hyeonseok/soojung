@@ -42,6 +42,8 @@ class Entry {
     fclose($fd);
 
     $this->entryId = Soojung::filenameToEntryId($filename);
+    $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0 , strpos($_SERVER["SERVER_PROTOCOL"], '/'))) . '://';
+    $this->trackbackUrl = $protocol . $_SERVER['HTTP_HOST'] . '/soojung/trackback.php?blogid=' . $this->entryId;
   }
 
   function isSetOption($option) {
