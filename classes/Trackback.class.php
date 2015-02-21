@@ -94,12 +94,13 @@ class Trackback {
 
     $msg = "trackback from " . $url . "<br />";
     Soojung::notifyToAdmin("new trackback", $entryId, $msg);
+    Trackback::cacheTrackbackList();
   }
 
   /**
    * static method
    */
-  function getRecentTrackbacks($count=10) {
+  function cacheTrackbackList() {
     $filenames = array();
     $dirs = Soojung::queryFilenameMatch("^[0-9]+$", "contents/");
     foreach ($dirs as $dir) {
@@ -110,11 +111,24 @@ class Trackback {
     }
     usort($filenames, "cmp_base_filename");
 
-    $filenames = array_slice($filenames, 0, $count);
-    $trackbacks = array();
-    foreach ($filenames as $f) {
-      $trackbacks[] = new Trackback($f);
+    return fwrite(fopen('contents/.trackbackList', w), implode("\n", $filenames));
+  }
+
+  /**
+   * static method
+   */
+  function getRecentTrackbacks($count=10) {
+    if (file_exists('contents/.trackbackList') === false) {
+      Trackback::cacheTrackbackList();
     }
+    $fp = fopen('contents/.trackbackList', 'r');
+    while (($buffer = fgets($fp)) !== false) {
+      $trackbacks[] = new Trackback(trim($buffer));
+      if (count($trackbacks) >= $count) {
+        break;
+      }
+    }
+
     return $trackbacks;
   }
 

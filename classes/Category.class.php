@@ -59,14 +59,18 @@ class Category {
    */
   function getCategoryList() {
     $categories = $categoryentries = array();
-    $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
+    $filenames = Entry::getEntryList("^[0-9].+[.]entry$");
     foreach($filenames as $filename) {
+      $entry = new Entry($filename);
       $filenamepart = explode("_", $filename);
-      if(!isset($categoryentries[$filenamepart[1]])) {
-        $categoryentries[$filenamepart[1]] = true;
-        $entry = new Entry($filename);
         $categories[$entry->category->name] = $entry->category;
+      if (!isset($count)) {
+        $count = array();
       }
+      if (!isset($count[$filenamepart[1]])) {
+        $count[$filenamepart[1]] = 0;
+      }
+      $categories[$entry->category->name]->count = ++$count[$filenamepart[1]];
     }
     ksort($categories);
     return $categories;

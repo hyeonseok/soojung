@@ -46,6 +46,12 @@ function delete_mode() {
       echo "what the fuck?";
     } else {
       unlink($_GET["file"]);
+      if (strpos($_GET["file"], '.comment') !== false) {
+        Comment::cacheCommentList();
+      }
+      if (strpos($_GET["file"], '.trackback') !== false) {
+        Trackback::cacheTrackbackList();
+      }
       $temp = new Usertemplate("index.tpl", 1);
       $temp->clearCache();
     }
@@ -153,8 +159,7 @@ if ($_GET["mode"] == "config") {
   } else if ($_GET["flag"] == "secret") {
     $count = Entry::getSecretEntryCount();
   } else if (category_in_array($_GET["flag"], $categories)) {
-    $cate = new Category($_GET["flag"]);
-    $count = $cate->getEntryCount();
+    $count = $categories[$_GET["flag"]]->count;
   } else {
     $count = Entry::getEntryCount(false);
   }

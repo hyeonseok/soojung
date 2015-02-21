@@ -152,6 +152,7 @@ class Entry {
   function createEntry($title, $body, $date, $category, $options, $format = "plain") {
     $id = Soojung::createNewEntryId();
     Entry::entryWrite($title, $body, $date, $category, $id, $options, $format);
+    Entry::cacheEntryList();
     return $id;
   }
 
@@ -163,6 +164,7 @@ class Entry {
     //return FALSE;
     @unlink(Soojung::entryIdToFilename($entryId));
     Entry::entryWrite($title, $body, $date, $category, $entryId, $options, $format);
+    Entry::cacheEntryList();  // FIXME: It's sufficient to rebuild cache whenever $date has been changed.
     return TRUE;
   }
 
@@ -172,13 +174,16 @@ class Entry {
   function deleteEntry($entryId) {
     unlink(Soojung::entryIdToFilename($entryId));
     rmdirr("contents/" . $entryId);
+    Entry::cacheEntryList();
   }
 
   /**
    * static method
    */
   function getEntryCount($hide=true) {
-    return Soojung::queryNumFilenameMatch(Entry::_getQuery($hide));
+    $entries = Entry::getEntryList(Entry::_getQuery($hide));
+    $count = count($entries);
+    return $count;
   }
 
   /**
@@ -204,11 +209,45 @@ class Entry {
   /**
    * static method
    */
+  function cacheEntryList() {
+    $entry_filenames = array();
+    $files = Soojung::queryFilenameMatch("[.]entry$");
+    foreach ($files as $file) {
+      $entry_filenames[] = $file;
+    }
+    usort($entry_filenames, "cmp_base_filename");
+
+    return fwrite(fopen('contents/.entryList', w), implode("\n", $entry_filenames));
+  }
+
+  /**
+   * static method
+   */
+  function getEntryList($query, $length = false) {
+    $entries = array();
+    if (file_exists('contents/.entryList') === false) {
+      Entry::cacheEntryList();
+    }
+    $fp = fopen('contents/.entryList', 'r');
+    while (($buffer = fgets($fp)) !== false) {
+      $buffer = trim($buffer);
+      if (ereg($query, str_replace('contents/', '', trim($buffer))) !== false) {
+        $entries[] = $buffer;
+        if ($length && count($entries) >= $length) {
+          break;
+        }
+      }
+    }
+    return $entries;
+  }
+
+  /**
+   * static method
+   */
   function getEntries($count, $page, $hide=true) {
     $entries = array();
     $query = Entry::_getQuery($hide);
-    $filenames = Soojung::queryFilenameMatch($query);
-    usort($filenames, "cmp_base_filename");
+    $filenames = Entry::getEntryList($query);
     $index = ($page - 1) * $count;
 
     for ($i = $index; $i < count($filenames) && $i < ($index + $count); $i++) {
@@ -225,8 +264,7 @@ class Entry {
   function getAllEntries($hide=true) {
     $entries = array();
     $query = Entry::_getQuery($hide);
-    $filenames = Soojung::queryFilenameMatch($query);
-    usort($filenames, "cmp_base_filename");
+    $filenames = Entry::getEntryList($query);
     foreach($filenames as $filename) {
       $entries[] = new Entry($filename);
     }
@@ -292,15 +330,6 @@ class Entry {
 
   function getSecretEntryCount() {
     return Soojung::queryNumFilenameMatch("^[.][0-9]+.+[.]entry$");
-  }
-
-
-  /**
-   * static method
-   */
-  function exists($blogid) {
-    $entry = Entry::getEntry($blogid);
-    return $entry->entryId != "";
   }
 
   /**

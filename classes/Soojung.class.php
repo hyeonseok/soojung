@@ -10,18 +10,15 @@ class Soojung {
     if (is_dir($path) === false) {
       return $list;
     }
-
-    $dh = opendir($path);
-    if ($dh == false) {
+    $file_list = scandir($path);
+    if ($file_list === false) {
       return $list;
     }
-
-    while (($file = readdir($dh)) !== false) {
+    foreach($file_list as $file) {
       if (ereg($query, $file)) {
 	$list[] = $path . $file;
       }
     }
-    closedir($dh);
     return $list;
   }
 
@@ -33,18 +30,15 @@ class Soojung {
     if (is_dir($path) === false) {
       return $number;
     }
-
-    $dh = opendir($path);
-    if ($dh == false) {
+    $file_list = scandir($path);
+    if ($file_list === false) {
       return $number;
     }
-
-    while (($file = readdir($dh)) !== false) {
+    foreach($file_list as $file) {
       if (ereg($query, $file)) {
 	$number++;
       }
     }
-    closedir($dh);
     return $number;
   }
 
@@ -52,7 +46,7 @@ class Soojung {
    * static method
    */
   function entryIdToFilename($entryId) {
-    $f = Soojung::queryFilenameMatch("_" . $entryId . "[.]entry$");
+    $f = Entry::getEntryList("_" . $entryId . "[.]entry$", 1);
     return $f[0];
   }
 

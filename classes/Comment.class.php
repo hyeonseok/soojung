@@ -75,12 +75,13 @@ class Comment {
     $msg =  $name . " said:<br />";
     $msg .= $body;
     Soojung::notifyToAdmin("new comment", $entryId, $msg);
+    Comment::cacheCommentList();
   }
 
   /**
    * static method
    */
-  function getRecentComments($count=10) {
+  function cacheCommentList() {
     $comment_filenames = array();
     $dirs = Soojung::queryFilenameMatch("^[0-9]+$", "contents/");
     foreach ($dirs as $dir) {
@@ -91,11 +92,24 @@ class Comment {
     }
     usort($comment_filenames, "cmp_base_filename");
 
-    $comment_filenames = array_slice($comment_filenames, 0, $count);
-    $comments = array();
-    foreach ($comment_filenames as $f) {
-      $comments[] = new Comment($f);
+    return fwrite(fopen('contents/.commentList', 'w'), implode("\n", $comment_filenames));
+  }
+
+  /**
+   * static method
+   */
+  function getRecentComments($count=10) {
+    if (file_exists('contents/.commentList') === false) {
+      Comment::cacheCommentList();
     }
+    $fp = fopen('contents/.commentList', 'r');
+    while (($buffer = fgets($fp)) !== false) {
+      $comments[] = new Comment(trim($buffer));
+      if (count($comments) >= $count) {
+        break;
+      }
+    }
+
     return $comments;
   }
 
