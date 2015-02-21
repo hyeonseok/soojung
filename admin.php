@@ -191,9 +191,9 @@ if ($_GET["mode"] == "config") {
   $template->assign("flag", $_GET["flag"]);
   $template->display('list.tpl');
 } else {
-  $template->assign('recent_entries', Entry::getRecentEntries(5, false));
-  $template->assign('recent_comments', Comment::getRecentComments(5));
-  $template->assign('recent_trackbacks', Trackback::getRecentTrackbacks(5));
+  $template->assign('recent_entries', Entry::getRecentEntries(10, false));
+  $template->assign('recent_comments', Comment::getRecentComments(10));
+  $template->assign('recent_trackbacks', Trackback::getRecentTrackbacks(10));
   $template->assign('entry_count', Entry::getEntryCount());
   $template->display('overview.tpl');
 }
