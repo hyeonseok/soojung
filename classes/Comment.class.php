@@ -56,10 +56,6 @@ class Comment {
       return;
     }
     
-    if (Spam::isSpamBody($body) || Spam::isSpam($name) || Spam::isSpam($homepage)) {
-      return;
-    }
-
     $dirname = "contents/" . $entryId;
     @mkdir($dirname, 0777);
 

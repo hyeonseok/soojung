@@ -172,7 +172,6 @@ class Soojung {
       fwrite($fd, '$admin_password="' . $adminpassword . "\";\n");
     }
     fwrite($fd, '$entries_license="' . $license . "\";\n");
-    fwrite($fd, '$spam_words="' . $words . "\";\n");
     fwrite($fd, "?>");
     fclose($fd);
   }
@@ -200,18 +199,6 @@ class Soojung {
     $f = fopen($filename, "w");
     fwrite($f, "");
     fclose($f);
-  }
-
-  // referer spam check
-  function isSpam($text) {
-    $words = array("search", "blogspot", "naked", "nude", "boobs", "viagra",
-		   "poker", "password", "sex", "porn", "hentai");
-    foreach ($words as $word) {
-      if (strpos($text, $word) !== FALSE) {
-	return true;
-      }
-    }
-    return false;
   }
 }
 

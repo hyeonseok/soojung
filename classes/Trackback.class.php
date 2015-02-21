@@ -69,11 +69,6 @@ class Trackback {
       return;
     }
 
-    if (Spam::validateURL($url) || Spam::isSpam($name) || Spam::isSpam($title)
-	|| Spam::isSpam($url) || Spam::isSpamBody($excerpt)) {
-      return;
-    }
-
     $dirname = "contents/" . $entryId;
     @mkdir($dirname, 0777);
 

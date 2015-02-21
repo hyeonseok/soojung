@@ -85,13 +85,6 @@
 </span>
 </div>
 
-<div class="row">
-<span class="label">Spam Filter:</span>
-<span class="formw"><textarea name="word" rows="5" cols="40" {if !$config_writable}disabled{/if} >{$spam_words}</textarea></span>
-<div class="help">Input spam word in each line. It's regular expression supported.<br />
-example:<br />viagra<br />nude</div>
-</div>
-
 <input type="hidden" name="mode" value="config_update" />
 
 <div class="row">

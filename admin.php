@@ -133,7 +133,6 @@ if ($_GET["mode"] == "config") {
   $template->assign("license", $entries_license);
   $template->assign("admin_name", $admin_name);
   $template->assign("admin_email", $admin_email);
-  $template->assign("spam_words", $spam_words);
   $template->assign("templates", Soojung::getTemplates());
   $template->assign("config_writable", is_writable("config.php"));
   $template->display('config.tpl');

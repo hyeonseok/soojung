@@ -22,7 +22,6 @@ include_once("classes/Category.class.php");
 include_once("classes/Export.class.php");
 include_once("classes/Import.class.php");
 include_once("classes/Calendar.class.php");
-include_once("classes/Spam.class.php");
 
 define('SMARTY_DIR', 'libs/smarty/');
 require(SMARTY_DIR . 'Smarty.class.php');
