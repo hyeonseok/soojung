@@ -75,7 +75,5 @@ if (ini_get("register_globals")) {
       unset(${$key});
 }
 
-Soojung::addReferer();
-
 # vim: ts=8 sw=2 sts=2 noet
 ?>

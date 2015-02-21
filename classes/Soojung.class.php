@@ -215,53 +215,6 @@ class Soojung {
     }
     return false;
   }
-
-  function addReferer() {
-    if (isset($_SERVER['HTTP_REFERER'])) {
-      global $blog_baseurl;
-      $referer = $_SERVER['HTTP_REFERER'];
-
-      if(strstr($referer, $blog_baseurl) != FALSE) { //local
-	return;
-      }
-
-      if (strpos($referer, "http://") !== 0) {
-	return;
-      }
-      if (Soojung::isSpam($referer)) {
-	return;
-      }
-
-      if ($fd = @fopen("contents/.referer", "r")) {
-      	flock($fd, LOCK_SH);
-        $data = @fread($fd, filesize("contents/.referer"));
-        flock($fd, LOCK_UN);
-        fclose($fd);
-	$array = split("\r\n", $data);
-	array_unshift($array, $referer);
-	$array = array_unique($array);
-	$array = array_slice($array, 0, 100);
-      } else {
-	$array = array();
-        $array[] = $referer;
-      }
-
-      locked_filewrite("contents/.referer", implode($array, "\r\n"));
-    }
-  }
-
-  function getRecentReferers($n) {
-    if ($fd = @fopen("contents/.referer", "r")) {
-      $data = @fread($fd, filesize("contents/.referer"));
-      $array = split("\r\n", $data);
-      $array = array_slice($array, 0, $n);
-
-      foreach($array as $key => $val) {
-	$array[$key] = htmlspecialchars($val);
-      }
-      return $array;
-    }
-  }
 }
 
 # vim: ts=8 sw=2 sts=2 noet

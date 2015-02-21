@@ -70,10 +70,6 @@
 	      <td><a href="{$baseurl}/admin.php?mode=clear_cache">Clear cache</a></td>
 	      <td></td>
 	    </tr>
-	    <tr>
-	      <td><a href="{$baseurl}/admin.php?mode=clear_referer">Clear referer</a></td>
-	      <td></td>
-	    </tr>
 	  </table>
 	</div>
 </div>

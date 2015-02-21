@@ -75,17 +75,6 @@
 </ul>
 {/if}
 
-{if count($recent_referers) != 0}
-<h3><a href="#none" onclick="return fold_sidebar('div_recent_referer');">Recent Referers</a></h3>
-<ul id="div_recent_referer" class="div_hide">
-	{foreach from=$recent_referers item=referer}
-	<li>
-		<a href="{$referer}">{$referer}</a>
-	</li>
-	{/foreach}
-</ul>
-{/if}
-
 {if count($bookmarks) != 0}
 <h3><a href="#none" onclick="return fold_sidebar('div_bookmark');">Bookmarks</a></h3>
 <ul id="div_bookmark" class="div_hide">

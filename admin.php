@@ -88,10 +88,6 @@ function clear_cache_mode() {
   $temp->clearCache();
 }
 
-function clear_referer_mode() {
-  @unlink("contents/.referer");
-}
-
 function logout_mode() {
   unset($_SESSION['auth']);
   setcookie(session_name(), '', 0, '/');
@@ -123,8 +119,6 @@ if ($_POST["mode"] == "config_update") {
   import_mode();
 } else if ($_GET["mode"] == "clear_cache") {
   clear_cache_mode();
-} else if ($_GET["mode"] == "clear_referer") {
-  clear_referer_mode();
 } else if ($_GET["mode"] == "logout") {
   logout_mode();
 }
