@@ -30,7 +30,6 @@ class UserTemplate extends Template {
       $this->assign('recent_entries', Entry::getRecentEntries(10));
       $this->assign('recent_comments', Comment::getRecentComments(10));
       $this->assign('recent_trackbacks', Trackback::getRecentTrackbacks(10));
-      $this->assign('recent_referers', Soojung::getRecentReferers(10));
 
       $year = 0;
       $month = 0;
