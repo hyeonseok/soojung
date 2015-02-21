@@ -68,6 +68,10 @@ class Entry {
   }
 
   function getRawBody() {
+    if (empty($this->filename)) {
+      return 'Data does not exists.';
+    }
+
     $fd = fopen($this->filename, "r");
     fgets($fd, 1024); // date
     fgets($fd, 1024); // title
