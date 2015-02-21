@@ -135,7 +135,7 @@ class Trackback {
 
     //  $permlink = rawurlencode(get_entry_link($blogid, false));
     $entry = Entry::getEntry($entryId);
-    $permlink = rawurlencode($entry->getHref());
+    $permlink = 'http://' . $_SERVER['HTTP_HOST'] . rawurlencode($entry->getHref());
 
     if ($entry->title != null) {
       $tb_title = rawurlencode(mb_convert_encoding($entry->title, "UTF-8", $encoding));
