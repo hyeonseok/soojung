@@ -64,8 +64,6 @@ class Soojung {
       $i = strrpos($filename, "_") + 1;
       $j = strrpos($filename, ".");
       return substr($filename, $i, $j-$i);
-    } else if (strpos($filename, ".bookmark") != false) {
-      return basename($filename, ".bookmark");
     } else { //comment, trackback
       $dirs = explode("/", $filename);
       return $dirs[1];
