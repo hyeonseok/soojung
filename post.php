@@ -80,9 +80,11 @@ if ($_POST["mode"] == "upload") {
     }
     $temp = new UserTemplate("index.tpl", 1);
     $temp->clearCache();
-    echo "post success<br>";
-    echo "<a href=\"admin.php\">admin</a> ";
-    echo "<a href=\"index.php\">index</a><br />";
+    if (strlen($_POST["id"]) > 0) {
+      header("Location: post.php?blogid=" . $_POST["id"]);
+    } else {
+      header("Location: admin.php?mode=list");
+    }
     exit;
   }
 } else if ($_GET["blogid"]) { //edit
