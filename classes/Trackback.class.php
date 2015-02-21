@@ -25,9 +25,19 @@ class Trackback {
     $fd = fopen($filename, "r");
     $this->date = trim(fgets($fd, 1024));
     $this->url = trim(fgets($fd, 1024));
-    $this->name = trim(fgets($fd, 1024));
-    $this->title = trim(fgets($fd, 1024));
+    $this->name = $this->escape(trim(fgets($fd, 1024)));
+    $this->title = $this->escape(trim(fgets($fd, 1024)));
     fclose($fd);
+  }
+
+  function escape($str) {
+    if (strpos($str, '&') !== false && strpos($str, ';') === false) {
+      return htmlspecialchars($str);
+    } else if (strpos($str, '&amp;#')) {
+      return htmlspecialchars_decode($str);
+    } else {
+      return $str;
+    }
   }
 
   function getHref() {
@@ -43,7 +53,7 @@ class Trackback {
     fgets($fd, 1024);
     fgets($fd, 1024);
     fgets($fd, 1024);
-    $excerpt = strip_tags(fread($fd, filesize($this->filename)));
+    $excerpt = $this->escape(strip_tags(fread($fd, filesize($this->filename))));
     fclose($fd);
     return $excerpt;
   }
