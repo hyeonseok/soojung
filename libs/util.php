@@ -83,9 +83,9 @@ function trim_slash($str) {
 
 function convert_to_utf8 ($string) {
   $result = "";
-  if (($result = iconv("UTF-8", "UTF-8", $string)) != FALSE) {
+  if (($result = mb_convert_encoding($string, "UTF-8", "UTF-8")) != FALSE) {
     return $result;
-  } else if (($result = iconv("CP949", "UTF-8", $string)) != FALSE) {
+  } else if (($result = mb_convert_encoding($string, "CP949", "UTF-8")) != FALSE) {
     return $result;
   }
   return FALSE;
@@ -96,9 +96,9 @@ function convert_to_utf8 ($string) {
  */
 
 function detect_encoding ($string) {
-  if (iconv("UTF-8", "UTF-8", $string) != FALSE) {
+  if (mb_convert_encoding($string, "UTF-8", "UTF-8") != FALSE) {
     return "UTF-8";
-  } else if (iconv("CP949", "UTF-8", $string) != FALSE) {
+  } else if (mb_convert_encoding($string, "CP949", "UTF-8") != FALSE) {
     return "CP949";
   }
   return FALSE;
