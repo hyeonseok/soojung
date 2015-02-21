@@ -83,11 +83,6 @@
 </p>
 </form>
 
-<p>
-Today : {$today_count}<br />
-Total : {$total_count}<br />
-</p>
-
 <a href="{$baseurl}/rss2.php">
 <img src="{$baseurl}/templates/simple/imgs/rss20_logo.gif" alt="rss 2.0 feed" style="border:0px;"/>
 </a>
