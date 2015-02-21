@@ -75,19 +75,6 @@
 </ul>
 {/if}
 
-{if count($bookmarks) != 0}
-<h3><a href="#none" onclick="return fold_sidebar('div_bookmark');">Bookmarks</a></h3>
-<ul id="div_bookmark" class="div_hide">
-	{foreach from=$bookmarks item=bookmark}
-	<li>
-		<a href="{$bookmark->url|escape}">{$bookmark->name|escape}</a>
-	</li>
-	{foreachelse}
-	<li></li>
-	{/foreach}
-</ul>
-{/if}
-
 <h3>Search</h3>
 <form action="{$baseurl}/index.php" method="get">
 <p>

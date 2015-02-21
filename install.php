@@ -42,7 +42,6 @@ if (isset($_POST["name"])) {
   } else {
     mkdir("contents", 0777);
     mkdir("contents/upload", 0777);
-    mkdir("contents/.bookmark", 0777);
 
     mkdir("templates/.cache", 0777);
     mkdir("templates/.configs", 0777);
