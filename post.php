@@ -45,7 +45,7 @@ if ($_POST["mode"] == "upload") {
   $title =  $_POST["title"];
   $format = $_POST["format"];
   $formatter = Soojung::getFormatter($format);
-  $body = $formatter->onPost($_POST["body"]);
+  $body = $_POST["body"];
   $date = strtotime($_POST["date"]);
   if (empty($_POST["category_input"]) == false) {
     $category = trim($_POST["category_input"]);
@@ -103,7 +103,7 @@ if ($_POST["mode"] == "upload") {
   $format = $_POST["format"];
   $formatter = Soojung::getFormatter($format);
   $preview_body = $formatter->toHtml($_POST["body"]);
-  $body = $formatter->onPost($_POST["body"]);
+  $body = $_POST["body"];
   $date = strtotime($_POST["date"]);
   if (empty($_POST["category_input"]) == false) {
     $category = trim($_POST["category_input"]);
