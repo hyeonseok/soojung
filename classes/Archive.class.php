@@ -72,7 +72,7 @@ class Archive {
   function getArchiveList() {
     $archives = array();
     $files = array();
-    $filenames = Entry::getEntryList("^[0-9].+[.]entry$");
+    $filenames = Entry::getEntryList("/^[0-9].+[.]entry$/");
     foreach($filenames as $filename) {
       $t = substr($filename, 9);
       $t = substr($t, 0, 6);

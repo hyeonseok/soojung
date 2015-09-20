@@ -102,9 +102,9 @@ class Trackback {
    */
   function cacheTrackbackList() {
     $filenames = array();
-    $dirs = Soojung::queryFilenameMatch("^[0-9]+$", "contents/");
+    $dirs = Soojung::queryFilenameMatch("/^[0-9]+$/", "contents/");
     foreach ($dirs as $dir) {
-      $files = Soojung::queryFilenameMatch("[.]trackback$", $dir . "/");
+      $files = Soojung::queryFilenameMatch("/[.]trackback$/", $dir . "/");
       foreach ($files as $file) {
 	$filenames[] = $file;
       }
@@ -204,9 +204,9 @@ class Trackback {
       $line .= fgets ($fp, 1024);
     }
 
-    if (ereg("<error>[^<0-9]*([0-9]*)[^<0-9]*</error>", $line, $regs)) {
+    if (preg_match("/<error>[^<0-9]*([0-9]*)[^<0-9]*</error>/", $line, $regs)) {
       $response['error'] = $regs[1];
-      if ($response == 0 && ereg("<message>([<]*)</message>", $line, $regs)) {
+      if ($response == 0 && preg_match("/<message>([<]*)</message>/", $line, $regs)) {
 	$response['message'] = $regs[1];
       }
     }

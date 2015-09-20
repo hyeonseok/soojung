@@ -206,7 +206,7 @@
 		$i=0;
 		while($i<sizeof($top))
 		{
-			if (ereg("^([#a-zA-Z0-9]+);", $top[$i], $regs))
+			if (preg_match("/^([#a-zA-Z0-9]+);/", $top[$i], $regs))
 			{
 				$op.=ereg_replace("^[#a-zA-Z0-9]+;",
 				xmlrpc_lookup_entity($regs[1]),
@@ -236,7 +236,7 @@
 		{
 			return $xmlEntities[strtolower($ent)];
 		}
-		if (ereg("^#([0-9]+)$", $ent, $regs))
+		if (preg_match("/^#([0-9]+)$/", $ent, $regs))
 		{
 			return chr($regs[1]);
 		}
@@ -767,7 +767,7 @@
 				{
 					// we have a DOUBLE
 					// we must check that only 0123456789-.<space> are characters here
-					if (!ereg("^[+-]?[eE0123456789 \\t\\.]+$", $_xh[$parser]['ac']))
+					if (!preg_match("/^[+-]?[eE0123456789 \\t\\.]+$/", $_xh[$parser]['ac']))
 					{
 						// TODO: find a better way of throwing an error
 						// than this!
@@ -786,7 +786,7 @@
 				{
 					// we have an I4/INT
 					// we must check that only 0123456789-<space> are characters here
-					if (!ereg("^[+-]?[0123456789 \\t]+$", $_xh[$parser]['ac']))
+					if (!preg_match("/^[+-]?[0123456789 \\t]+$/", $_xh[$parser]['ac']))
 					{
 						// TODO: find a better way of throwing an error
 						// than this!
@@ -897,7 +897,7 @@
 	{
 		global $_xh, $xmlrpc_backslash;
 
-		//if (ereg("^[\n\r \t]+$", $data)) return;
+		//if (preg_match("/^[\n\r \t]+$/", $data)) return;
 		// print "adding [${data}]\n";
 
 		// skip processing if xml fault already detected
@@ -1459,10 +1459,10 @@
 			}
 			// see if we got an HTTP 200 OK, else bomb
 			// but only do this if we're using the HTTP protocol.
-			if(ereg("^HTTP",$data))
+			if(preg_match("/^HTTP/",$data))
 			{
 				// Strip HTTP 1.1 100 Continue header if present
-				while (ereg('^HTTP/1.1 1[0-9]{2}', $data))
+				while (preg_match('/^HTTP/1.1 1[0-9]{2}/', $data))
 				{
 					$pos = strpos($data, 'HTTP', 12);
 					// server sent a Continue header without any (valid) content following...
@@ -1471,7 +1471,7 @@
 						break;
 					$data = substr($data, $pos);
 				}
-				if (!ereg("^HTTP/[0-9\\.]+ 200 ", $data))
+				if (!preg_match("/^HTTP/[0-9\\.]+ 200 /", $data))
 				{
 					$errstr= substr($data, 0, strpos($data, "\n")-1);
 					error_log('HTTP error, got response: ' .$errstr);
@@ -1493,7 +1493,7 @@
 			$_xh[$parser]['vsp'] = 0;
 
 			// separate HTTP headers from data
-			if (ereg("^HTTP", $data))
+			if (preg_match("/^HTTP/", $data))
 			{
 				// be tolerant to usage of \n instead of \r\n to separate headers and data
 				// (even though it is not valid http)
@@ -2004,7 +2004,7 @@
 	{
 		// return a timet in the localtime, or UTC
 		$t=0;
-		if (ereg("([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})", $idate, $regs))
+		if (preg_match("/([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})/", $idate, $regs))
 		{
 			if ($utc)
 			{

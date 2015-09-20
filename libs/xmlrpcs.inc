@@ -68,7 +68,7 @@
 
 		$methName=$m->getParam(0);
 		$methName=$methName->scalarval();
-		if (ereg("^system\.", $methName))
+		if (preg_match("/^system\./", $methName))
 		{
 			$dmap=$_xmlrpcs_dmap; $sysCall=1;
 		}
@@ -115,7 +115,7 @@
 
 		$methName=$m->getParam(0);
 		$methName=$methName->scalarval();
-		if (ereg("^system\.", $methName))
+		if (preg_match("/^system\./", $methName))
 		{
 			$dmap=$_xmlrpcs_dmap; $sysCall=1;
 		}
@@ -454,7 +454,7 @@
 			global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
 			// now to deal with the method
 			$methName = $m->method();
-			$sysCall = ereg("^system\.", $methName);
+			$sysCall = preg_match("/^system\./", $methName);
 			$dmap = $sysCall ? $_xmlrpcs_dmap : $this->dmap;
 
 			if (!isset($dmap[$methName]['function']))

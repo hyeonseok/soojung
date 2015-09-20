@@ -83,9 +83,9 @@ class Comment {
    */
   function cacheCommentList() {
     $comment_filenames = array();
-    $dirs = Soojung::queryFilenameMatch("^[0-9]+$", "contents/");
+    $dirs = Soojung::queryFilenameMatch("/^[0-9]+$/", "contents/");
     foreach ($dirs as $dir) {
-      $files = Soojung::queryFilenameMatch("[.]comment$", $dir . "/");
+      $files = Soojung::queryFilenameMatch("/[.]comment$/", $dir . "/");
       foreach ($files as $file) {
 	$comment_filenames[] = $file;
       }

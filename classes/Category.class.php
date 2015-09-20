@@ -32,7 +32,7 @@ class Category {
 
   function getEntries($count = -1, $page = 1) {
     $entries = array();
-    $query = "^[0-9].+_" . str_replace("+", "\\+", $this->getHashID()) . "_.+[.]entry$";
+    $query = "/^[0-9].+_" . str_replace("+", "\\+", $this->getHashID()) . "_.+[.]entry$/";
     $filenames = Soojung::queryFilenameMatch($query);
     usort($filenames, "cmp_base_filename");
 
@@ -50,7 +50,7 @@ class Category {
   }
 
   function getEntryCount() {
-    $query = "^[0-9].+_" . str_replace("+", "\\+", $this->getHashID()) . "_.+[.]entry$";
+    $query = "/^[0-9].+_" . str_replace("+", "\\+", $this->getHashID()) . "_.+[.]entry$/";
     return Soojung::queryNumFilenameMatch($query);
   }
 
@@ -59,7 +59,7 @@ class Category {
    */
   function getCategoryList() {
     $categories = $categoryentries = array();
-    $filenames = Entry::getEntryList("^[0-9].+[.]entry$");
+    $filenames = Entry::getEntryList("/^[0-9].+[.]entry$/");
     foreach($filenames as $filename) {
       $entry = new Entry($filename);
       $filenamepart = explode("_", $filename);

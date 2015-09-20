@@ -90,7 +90,7 @@ class Calendar {
 
   function getEntriesForCalendar($year, $month) {
     $entries = array();
-    $filenames = Soojung::queryFilenameMatch(sprintf("^%04d%02d[^.]+[.]entry$", $year, $month));
+    $filenames = Soojung::queryFilenameMatch(sprintf("/^%04d%02d[^.]+[.]entry$/", $year, $month));
     sort($filenames);
     foreach($filenames as $filename) {
       list($datetime, $category, $entryid) = explode("_", substr(basename($filename), 0, -6));

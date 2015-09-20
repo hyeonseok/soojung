@@ -94,12 +94,12 @@ class Entry {
   }
 
   function getCommentCount() {
-    return Soojung::queryNumFilenameMatch("[.]comment$", "contents/" . $this->entryId . "/");
+    return Soojung::queryNumFilenameMatch("/[.]comment$/", "contents/" . $this->entryId . "/");
   }
 
   function getComments() {
     $comments = array();
-    $filenames = Soojung::queryFilenameMatch("[.]comment$", "contents/" . $this->entryId . "/");
+    $filenames = Soojung::queryFilenameMatch("/[.]comment$/", "contents/" . $this->entryId . "/");
     sort($filenames);
     foreach($filenames as $filename) {
       $comments[] = new Comment($filename);
@@ -108,12 +108,12 @@ class Entry {
   }
 
   function getTrackbackCount() {
-    return Soojung::queryNumFilenameMatch("[.]trackback$", "contents/" . $this->entryId);
+    return Soojung::queryNumFilenameMatch("/[.]trackback$/", "contents/" . $this->entryId);
   }
 
   function getTrackbacks() {
     $trackbacks = array();
-    $filenames = Soojung::queryFilenameMatch("[.]trackback$", "contents/" . $this->entryId . "/");
+    $filenames = Soojung::queryFilenameMatch("/[.]trackback$/", "contents/" . $this->entryId . "/");
     sort($filenames);
     foreach($filenames as $filename) {
       $trackbacks[] = new Trackback($filename);
@@ -178,16 +178,16 @@ class Entry {
 
   private static function _getQuery($hide) {
     if ($hide == false) {
-      $query = "[.]entry$";
+      $query = "/[.]entry$/";
     } else {
-      $query = "^[0-9].+[.]entry$";
+      $query = "/^[0-9].+[.]entry$/";
     }
     return $query;
   }
 
   public static function cacheEntryList() {
     $entry_filenames = array();
-    $files = Soojung::queryFilenameMatch("[.]entry$");
+    $files = Soojung::queryFilenameMatch("/[.]entry$/");
     foreach ($files as $file) {
       $entry_filenames[] = $file;
     }
@@ -204,7 +204,7 @@ class Entry {
     $fp = fopen('contents/.entryList', 'r');
     while (($buffer = fgets($fp)) !== false) {
       $buffer = trim($buffer);
-      if (ereg($query, str_replace('contents/', '', trim($buffer))) !== false) {
+      if (preg_match($query, str_replace('contents/', '', trim($buffer))) === 1) {
         $entries[] = $buffer;
         if ($length && count($entries) >= $length) {
           break;
@@ -244,7 +244,7 @@ class Entry {
 
   public static function getStaticEntries($count = -1, $page = 1) {
     $entries = array();
-    $query = "^[0-9].+S_.+[.]entry$";
+    $query = "/^[0-9].+\S_.+\.entry$/";
     $filenames = Soojung::queryFilenameMatch($query);
     usort($filenames, "cmp_base_filename");
 
@@ -263,12 +263,12 @@ class Entry {
   }
 
   function getStaticEntryCount() {
-    return Soojung::queryNumFilenameMatch("^[0-9].+S_.+[.]entry$");
+    return Soojung::queryNumFilenameMatch("^[0-9].+\S_.+[.]entry$");
   }
 
   public static function getSecretEntries($count = -1, $page = 1) {
     $entries = array();
-    $query = "^[.][0-9]+.+[.]entry$";
+    $query = "/^[.][0-9]+.+[.]entry$/";
     $filenames = Soojung::queryFilenameMatch($query);
     usort($filenames, "cmp_base_filename");
 
@@ -296,7 +296,7 @@ class Entry {
       return $founds;
     }
     if ($mode == "all") {
-      $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
+      $filenames = Soojung::queryFilenameMatch("/^[0-9].+[.]entry$/");
       rsort($filenames);
       foreach($filenames as $f) {
 	$fd = fopen($f, "r");
@@ -317,7 +317,7 @@ class Entry {
     if ($keyword == "") {
       return $founds;
     }
-    $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
+    $filenames = Soojung::queryFilenameMatch("/^[0-9].+[.]entry$/");
     rsort($filenames);
     foreach($filenames as $f) {
       $fd = fopen($f, "r");

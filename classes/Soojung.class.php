@@ -12,7 +12,7 @@ class Soojung {
       return $list;
     }
     foreach($file_list as $file) {
-      if (ereg($query, $file)) {
+      if (preg_match($query, $file)) {
 	$list[] = $path . $file;
       }
     }
@@ -29,7 +29,7 @@ class Soojung {
       return $number;
     }
     foreach($file_list as $file) {
-      if (ereg($query, $file)) {
+      if (preg_match($query, $file)) {
 	$number++;
       }
     }
@@ -37,7 +37,7 @@ class Soojung {
   }
 
   public static function entryIdToFilename($entryId) {
-    $f = Entry::getEntryList("_" . $entryId . "[.]entry$", 1);
+    $f = Entry::getEntryList("/_" . $entryId . "[.]entry$/", 1);
     return $f[0];
   }
 
@@ -82,7 +82,7 @@ class Soojung {
 
   public static function getTemplates() {
     $list = array();
-    $filenames = Soojung::queryFilenameMatch(".+", "templates/");
+    $filenames = Soojung::queryFilenameMatch("/.+/", "templates/");
     foreach($filenames as $filename) {
       $filename = basename($filename);
       if ($filename == "admin" or $filename == "CVS") {
