@@ -20,10 +20,6 @@ function appendLink(baseurl, path, name) {
 		/* bbcode */
 		link = '[url]' + baseurl + '/' + path + '[/url]';
 	}
-	else if (window.opener.document.postForm.format[3].checked) {
-		/* moniwiki */
-		link = "attachment:" + escape(name);
-	}
 	else {
 		link = escape(baseurl + '/' + path);
 	}

@@ -127,8 +127,6 @@ class Soojung {
       return new HtmlFormatter();
     case "bbcode":
       return new BBcodeFormatter();
-    case "moniwiki":
-      return new MoniwikiFormatter();
     default:
       return new Formatter();
     }

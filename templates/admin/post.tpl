@@ -93,7 +93,6 @@ function changeFormat(format) {
 	<label><input type="radio" name="format" value="plain"{if $format == "plain" || $format == ""} checked="checked"{/if} onClick="changeFormat('plain');" />plain</label>
 	<label><input type="radio" name="format" value="html"{if $format == "html"} checked="checked"{/if} onclick="changeFormat('html')" />html</label>
 	<label><input type="radio" name="format" value="bbcode"{if $format == "bbcode"} checked="checked"{/if} onclick="changeFormat('bbcode');" />bbcode</label>
-	<label><input type="radio" name="format" value="moniwiki"{if $format == "moniwiki"} checked="checked"{/if} onclick="changeFormat('moniwiki');" />moniwiki</label>
 </span>
 </div>
 

@@ -30,7 +30,6 @@ Version:
 <option value="import_tt">Tattertools</option>
 <option value="import_b2">B2</option>
 <option value="import_zb">Zeroboard (or ZOG)</option>
-<option value="import_moniwiki">Moniwiki</option>
 </select>
 </p>
 
@@ -84,13 +83,5 @@ Board ID: <input type="text" name="boardid" /><br />
 </form>
 
 </div>
-
-<form action="{$baseurl}/admin.php" method="post" id="import_moniwiki" class="hide">
-<h4>Moniwiki</h4>
-Moniwiki Path: <input type="text" name="wiki_path" /><br />
-Encoding: <input type="text" name="encoding" /><br />
-<input type="hidden" name="mode" value="import_moniwiki" />
-<input type="submit" value="import!" />
-</form>
 
 {include file="footer.tpl"}
