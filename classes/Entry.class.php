@@ -121,10 +121,7 @@ class Entry {
     return $trackbacks;
   }
 
-  /**
-   * static method
-   */
-  function entryWrite($title, $body, $date, $category, $entryId, $options, $format) {
+  public static function entryWrite($title, $body, $date, $category, $entryId, $options, $format) {
     $filename = "";
     if (in_array("SECRET", $options)) {
       $filename .= ".";
@@ -146,20 +143,14 @@ class Entry {
     fclose($fd);
   }
 
-  /**
-   * static method
-   */
-  function createEntry($title, $body, $date, $category, $options, $format = "plain") {
+  public static function createEntry($title, $body, $date, $category, $options, $format = "plain") {
     $id = Soojung::createNewEntryId();
     Entry::entryWrite($title, $body, $date, $category, $id, $options, $format);
     Entry::cacheEntryList();
     return $id;
   }
 
-  /**
-   * static method
-   */
-  function editEntry($entryId, $title, $body, $date, $category, $options, $format) {
+  public static function editEntry($entryId, $title, $body, $date, $category, $options, $format) {
     //if (file_exists(Soojung::entryIdToFilename($entryId)) !== TRUE)
     //return FALSE;
     @unlink(Soojung::entryIdToFilename($entryId));
@@ -168,36 +159,24 @@ class Entry {
     return TRUE;
   }
 
-  /**
-   * static method
-   */
-  function deleteEntry($entryId) {
+  public static function deleteEntry($entryId) {
     unlink(Soojung::entryIdToFilename($entryId));
     rmdirr("contents/" . $entryId);
     Entry::cacheEntryList();
   }
 
-  /**
-   * static method
-   */
-  function getEntryCount($hide=true) {
+  public static function getEntryCount($hide=true) {
     $entries = Entry::getEntryList(Entry::_getQuery($hide));
     $count = count($entries);
     return $count;
   }
 
-  /**
-   * static method
-   */
-  function getEntry($entryId) {
+  public static function getEntry($entryId) {
     $filename = Soojung::entryIdToFilename($entryId);
     return new Entry($filename);
   }
 
-  /**
-   * private static method
-   */
-  function _getQuery($hide) {
+  private static function _getQuery($hide) {
     if ($hide == false) {
       $query = "[.]entry$";
     } else {
@@ -206,10 +185,7 @@ class Entry {
     return $query;
   }
 
-  /**
-   * static method
-   */
-  function cacheEntryList() {
+  public static function cacheEntryList() {
     $entry_filenames = array();
     $files = Soojung::queryFilenameMatch("[.]entry$");
     foreach ($files as $file) {
@@ -220,10 +196,7 @@ class Entry {
     return fwrite(fopen('contents/.entryList', w), implode("\n", $entry_filenames));
   }
 
-  /**
-   * static method
-   */
-  function getEntryList($query, $length = false) {
+  public static function getEntryList($query, $length = false) {
     $entries = array();
     if (file_exists('contents/.entryList') === false) {
       Entry::cacheEntryList();
@@ -241,10 +214,7 @@ class Entry {
     return $entries;
   }
 
-  /**
-   * static method
-   */
-  function getEntries($count, $page, $hide=true) {
+  public static function getEntries($count, $page, $hide=true) {
     $entries = array();
     $query = Entry::_getQuery($hide);
     $filenames = Entry::getEntryList($query);
@@ -258,10 +228,7 @@ class Entry {
     return $entries;
   }
 
-  /**
-   * static method
-   */
-  function getAllEntries($hide=true) {
+  public static function getAllEntries($hide=true) {
     $entries = array();
     $query = Entry::_getQuery($hide);
     $filenames = Entry::getEntryList($query);
@@ -271,17 +238,11 @@ class Entry {
     return $entries;
   }
 
-  /**
-   * static method
-   */
-  function getRecentEntries($count=10, $hide=true) {
+  public static function getRecentEntries($count=10, $hide=true) {
     return Entry::getEntries($count, 1, $hide);
   }
 
-  /**
-   * static method
-   */
-  function getStaticEntries($count = -1, $page = 1) {
+  public static function getStaticEntries($count = -1, $page = 1) {
     $entries = array();
     $query = "^[0-9].+S_.+[.]entry$";
     $filenames = Soojung::queryFilenameMatch($query);
@@ -305,10 +266,7 @@ class Entry {
     return Soojung::queryNumFilenameMatch("^[0-9].+S_.+[.]entry$");
   }
 
-  /**
-   * static method
-   */
-  function getSecretEntries($count = -1, $page = 1) {
+  public static function getSecretEntries($count = -1, $page = 1) {
     $entries = array();
     $query = "^[.][0-9]+.+[.]entry$";
     $filenames = Soojung::queryFilenameMatch($query);
@@ -332,10 +290,7 @@ class Entry {
     return Soojung::queryNumFilenameMatch("^[.][0-9]+.+[.]entry$");
   }
 
-  /**
-   * static method
-   */
-  function search($keyword, $mode = "all") {
+  public static function search($keyword, $mode = "all") {
     $founds = array();
     if ($keyword == "") {
       return $founds;

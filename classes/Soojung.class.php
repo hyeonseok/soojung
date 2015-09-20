@@ -2,10 +2,7 @@
 
 class Soojung {
 
-  /**
-   * static method
-   */
-  function queryFilenameMatch($query, $path="contents/") {
+  public static function queryFilenameMatch($query, $path="contents/") {
     $list = array();
     if (is_dir($path) === false) {
       return $list;
@@ -22,10 +19,7 @@ class Soojung {
     return $list;
   }
 
-  /**
-   * static method
-   */
-  function queryNumFilenameMatch($query, $path="contents/") {
+  public static function queryNumFilenameMatch($query, $path="contents/") {
     $number = 0;
     if (is_dir($path) === false) {
       return $number;
@@ -42,18 +36,12 @@ class Soojung {
     return $number;
   }
 
-  /**
-   * static method
-   */
-  function entryIdToFilename($entryId) {
+  public static function entryIdToFilename($entryId) {
     $f = Entry::getEntryList("_" . $entryId . "[.]entry$", 1);
     return $f[0];
   }
 
-  /**
-   * static method
-   */
-  function filenameToEntryId($filename) {
+  public static function filenameToEntryId($filename) {
     if (strpos($filename, ".entry") != false) {
       $i = strrpos($filename, "_") + 1;
       $j = strrpos($filename, ".");
@@ -64,10 +52,7 @@ class Soojung {
     }
   }
 
-  /**
-   * static method
-   */
-  function notifyToAdmin($title, $entryId, $msg) {
+  public static function notifyToAdmin($title, $entryId, $msg) {
     global $notify, $admin_email;
     if ($notify != true) {
       return;
@@ -83,10 +68,7 @@ class Soojung {
     mail($admin_email, $title, $message, "Content-Type: text/html; charset=\"utf-8\"");
   }
 
-  /**
-   * static method
-   */
-  function createNewEntryId() {
+  public static function createNewEntryId() {
     clearstatcache();
     $fd = fopen("contents/.info", "r");
     flock($fd, LOCK_SH);
@@ -98,10 +80,7 @@ class Soojung {
     return $i;
   }
 
-  /**
-   * static method
-   */
-  function getTemplates() {
+  public static function getTemplates() {
     $list = array();
     $filenames = Soojung::queryFilenameMatch(".+", "templates/");
     foreach($filenames as $filename) {
@@ -116,10 +95,7 @@ class Soojung {
     return $list;
   }
 
-  /**
-   * static method
-   */
-  function getFormatter($format) {
+  public static function getFormatter($format) {
     switch($format) {
     case "plain":
       return new PlainFormatter();
@@ -132,10 +108,7 @@ class Soojung {
     }
   }
 
-  /**
-   * static method
-   */
-  function writeConfigFile($blogname, $blogdesc, $blogurl, $perpage, $blogfancyurl, $blognotify,
+  public static function writeConfigFile($blogname, $blogdesc, $blogurl, $perpage, $blogfancyurl, $blognotify,
 			     $adminname, $adminemail, $adminpassword, $skin = "simple", $license = "none",
 			     $words="수신거부\n기적의 영문법") {
     $fd = fopen("config.php", "w");
