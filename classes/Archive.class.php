@@ -34,9 +34,9 @@ class Archive {
 
   function getEntries() {
     if ($this->day) {
-      $pattern = sprintf("^%04d%02d%02d[^.]+[.]entry$", $this->year, $this->month, $this->day);
+      $pattern = sprintf("/^%04d%02d%02d[^.]+[.]entry$/", $this->year, $this->month, $this->day);
     } else {
-      $pattern = sprintf("^%04d%02d[^.]+[.]entry$", $this->year, $this->month);
+      $pattern = sprintf("/^%04d%02d[^.]+[.]entry$/", $this->year, $this->month);
     }
     $filenames = Soojung::queryFilenameMatch($pattern);
     rsort($filenames);
@@ -49,9 +49,9 @@ class Archive {
 
   function getEntryCount() {
     if ($this->day) {
-      $pattern = sprintf("^%04d%02d%02d[^.]+[.]entry$", $this->year, $this->month, $this->day);
+      $pattern = sprintf("/^%04d%02d%02d[^.]+[.]entry$/", $this->year, $this->month, $this->day);
     } else {
-      $pattern = sprintf("^%04d%02d[^.]+[.]entry$", $this->year, $this->month);
+      $pattern = sprintf("/^%04d%02d[^.]+[.]entry$/", $this->year, $this->month);
     }
     return Soojung::queryNumFilenameMatch($pattern);
   }
