@@ -4,7 +4,7 @@ class Archive {
   var $year;
   var $month;
 
-  function Archive($year, $month, $day = 0) {
+  function Archive($year, $month = 0, $day = 0) {
     $this->year = intval($year);
     $this->month = intval($month);
     $this->day = intval($day);
@@ -35,8 +35,10 @@ class Archive {
   function getEntries() {
     if ($this->day) {
       $pattern = sprintf("/^%04d%02d%02d[^.]+[.]entry$/", $this->year, $this->month, $this->day);
-    } else {
+    } else if ($this->month) {
       $pattern = sprintf("/^%04d%02d[^.]+[.]entry$/", $this->year, $this->month);
+    } else {
+      $pattern = sprintf("/^%04d[^.]+[.]entry$/", $this->year);
     }
     $filenames = Soojung::queryFilenameMatch($pattern);
     rsort($filenames);
