@@ -38,19 +38,6 @@ if (isset($_REQUEST["url"]) && isset($_REQUEST["blogid"]) && Entry::exists($_REQ
   if (strlen ($excerpt) > 255)
     $excerpt = substring($excerpt,252);  
   $name = stripslashes($_REQUEST["blog_name"]);
-
-
-
-#  $encoding_title = detect_encoding ($title);
-#  $encoding_excerpt = detect_encoding ($excerpt);
-#  $encoding_name = detect_encoding ($name)
-#  fwrite($fd, $encoding . "\n");
-#  if ($encoding != "UTF-8") {
-#    $title = iconv($encoding, "UTF-8", $_POST["title"]);
-#    $excerpt = iconv($encoding, "UTF-8", $_POST["excerpt"]);
-#    $name = iconv($encoding, "UTF-8", $_POST["blog_name"]);
-#  }
-
   $title = convert_to_utf8($title);
   $excerpt = convert_to_utf8($excerpt);
   $name = convert_to_utf8($name);

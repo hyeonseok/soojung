@@ -68,9 +68,9 @@ class Import {
         $category .= '/'.$subcategories[$line['category2']];
       }
       if ($needtoconvert) {
-        $title = iconv($encoding, "UTF-8", $line['title']);
-        $body = iconv($encoding, "UTF-8", $line['body']);
-        $category = iconv($encoding, "UTF-8", $category);
+        $title = mb_convert_encoding($line['title'], "UTF-8", $encoding);
+        $body = mb_convert_encoding($line['body'], "UTF-8", $encoding);
+        $category = mb_convert_encoding($category, "UTF-8", $encoding);
       } else {
         $title = $line['title'];
         $body = $line['body'];
@@ -90,8 +90,8 @@ class Import {
     $result = mysql_query($query) or die("query failed");
     while ($line = mysql_fetch_assoc($result)) {
       if ($needtoconvert) {
-        $name = iconv($encoding, "UTF-8", $line['name']);
-        $body = iconv($encoding, "UTF-8", $line['body']);
+        $name = mb_convert_encoding($line['name'], "UTF-8", $encoding);
+        $body = mb_convert_encoding($line['body'], "UTF-8", $encoding);
       } else {
         $name = $line['name'];
         $body = $line['body'];
@@ -109,9 +109,9 @@ class Import {
     $result = mysql_query($query) or die("query failed");
     while ($line = mysql_fetch_assoc($result)) {
       if ($needtoconvert) {
-        $name = iconv($encoding, "UTF-8", $line['site']);
-        $title = iconv($encoding, "UTF-8", $line['title']);
-        $excerpt = iconv($encoding, "UTF-8", $line['body']);
+        $name = mb_convert_encoding($line['site'], "UTF-8", $encoding);
+        $title = mb_convert_encoding($line['title'], "UTF-8", $encoding);
+        $excerpt = mb_convert_encoding($line['body'], "UTF-8", $encoding);
       } else {
         $name = $line['site'];
         $title = $line['title'];
@@ -184,9 +184,9 @@ class Import {
         $date = strtotime($line['post_date']);
 
         if (strcasecmp($encoding, "UTF-8") != 0 && strcasecmp($encoding, "UTF8") != 0) {
-          $title = iconv($encoding, "UTF-8", $title);
-          $body = iconv($encoding, "UTF-8", $body);
-          $category = iconv($encoding, "UTF-8", $category);
+          $title = mb_convert_encoding($title, "UTF-8", $encoding);
+          $body = mb_convert_encoding($body, "UTF-8", $encoding);
+          $category = mb_convert_encoding($category, "UTF-8", $encoding);
         }
         $body_id=Entry::createEntry($title, $body, $date, $category);
 
@@ -211,8 +211,8 @@ class Import {
           $comment_content = ereg_replace("\n", "<br />", $comment_content);
 
           if (strcasecmp($encoding, "UTF-8") != 0 && strcasecmp($encoding, "UTF8") != 0) {
-            $comment_author = iconv($encoding, "UTF-8", $comment_author);
-            $comment_content = iconv($encoding, "UTF-8", $comment_content);
+            $comment_author = mb_convert_encoding($comment_author, "UTF-8", $encoding);
+            $comment_content = mb_convert_encoding($comment_content, "UTF-8", $encoding);
           }
 
           Comment::writeComment($body_id, $comment_author, $comment_email,
@@ -249,9 +249,9 @@ class Import {
         $title = $line['post_title'];
         $body = stripslashes($line['post_content']);
       } else {
-        $title = iconv($encoding, "UTF-8", $line['post_title']);
-        $body = iconv($encoding, "UTF-8", stripslashes($line['post_content']));
-        $category = iconv($encoding, "UTF-8", $category);
+        $title = mb_convert_encoding($line['post_title'], "UTF-8", $encoding);
+        $body = mb_convert_encoding(stripslashes($line['post_content']), "UTF-8", $encoding);
+      $category = mb_convert_encoding($category, "UTF-8", $encoding);
       }
       $date = strtotime($line['post_date']);
       $options = array();
@@ -268,10 +268,10 @@ class Import {
           $homepage = $line['comment_author_url'];
           $body = $line['comment_content'];
         } else {
-          $name = iconv($encoding, "UTF-8", $line['comment_author']);
-          $email = iconv($encoding, "UTF-8", $line['comment_author_email']);
-          $homepage = iconv($encoding, "UTF-8", $line['comment_author_url']);
-          $body = iconv($encoding, "UTF-8", $line['comment_content']);
+          $name = mb_convert_encoding($line['comment_author'], "UTF-8", $encoding);
+          $email = mb_convert_encoding($line['comment_author_email'], "UTF-8", $encoding);
+        $homepage = mb_convert_encoding($line['comment_author_url'], "UTF-8", $encoding);
+        $body = mb_convert_encoding($line['comment_content'], "UTF-8", $encoding);
         }
         $date = strtotime($line['comment_date']);
 
@@ -310,9 +310,9 @@ class Import {
         $title = $line['subject'];
         $body = stripslashes($line['memo']);
       } else {
-        $title = iconv($encoding, "UTF-8", $line['subject']);
-        $body = iconv($encoding, "UTF-8", stripslashes($line['memo']));
-        $category = iconv($encoding, "UTF-8", $category);
+        $title = mb_convert_encoding($line['subject'], "UTF-8", $encoding);
+        $body = mb_convert_encoding(stripslashes($line['memo']), "UTF-8", $encoding);
+        $category = mb_convert_encoding($category, "UTF-8", $encoding);
       }
       $date = $line['reg_date'];
       $options = array();
@@ -330,8 +330,8 @@ class Import {
           $name = $line['name'];
           $body = $line['memo'];
         } else {
-          $name = iconv($encoding, "UTF-8", $line['name']);
-          $body = iconv($encoding, "UTF-8", $line['memo']);
+          $name = mb_convert_encoding($line['name'], "UTF-8", $encoding);
+          $body = mb_convert_encoding($line['memo'], "UTF-8", $encoding);
         }
         $date = $line['reg_date'];
 

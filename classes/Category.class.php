@@ -5,7 +5,7 @@ class Category {
 
   function Category($name) {
     if(!isutf8($name)) {
-      $name = iconv('UHC//IGNORE', 'UTF-8', $name);
+      $name = mb_convert_encoding('UTF-8', $name, 'UHC');
     }
     $this->name = $name;
   }

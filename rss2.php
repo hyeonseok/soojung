@@ -5,7 +5,7 @@ $encoding = strtolower(trim($_GET["encoding"]));
 if(!$encoding) $encoding = strtolower(trim($_GET["charset"]));
 if($encoding == "cp949" || $encoding == "euc-kr" || $encoding == "euckr") {
   $encoding = "euc-kr";
-  function convenc($str) { return iconv("UTF-8", "CP949", $str); }
+  function convenc($str) { return iconv($str, "CP949", "UTF-8"); }
 } else {
   $encoding = "utf-8";
   function convenc($str) { return $str; }
