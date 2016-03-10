@@ -36,7 +36,23 @@ if (!$template->is_cached('index.tpl', $cache_id)) {
     $template->assign('keyword', $_GET["archive"]);
     $archive = Archive::getArchive($_GET["archive"]);
     $entries = $archive->getEntries();
+    if (count($entries) == 0) {
+      $archive_list = Archive::getArchiveList();
+      $close_archive = null;
+      $min_diff = null;
+      foreach ($archive_list as $key => $value) {
+        $current_archive = $value->year . substr('0' . $value->month, -2);
+        $diff = abs(intval($_GET['archive']) - intval($current_archive));
+        if ($min_diff == null || $diff < $min_diff) {
+          $min_diff = $diff;
+          $close_archive = array($value->year, substr('0' . $value->month, -2));
+        }
+      }
+      header('Location: ' . $blog_baseurl . '/' . $close_archive[0] . '/' . $close_archive[1]);
+      exit();
+    } else {
     $template->assign('entries', $entries);
+    }
   } else if (isset($_GET["category"])) {
     $template->assign('view', 'category');
     $template->assign('keyword', $_GET["category"]);
