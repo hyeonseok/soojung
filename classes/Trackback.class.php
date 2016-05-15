@@ -60,9 +60,8 @@ class Trackback {
 
   /**
    * need to check entryId is not null or anything. this is caused by tattertools.
-   * static method
    */
-  function writeTrackback($entryId, $url, $name, $title, $excerpt, $date = false) {
+  static function writeTrackback($entryId, $url, $name, $title, $excerpt, $date = false) {
 
     $e = Entry::getEntry($entryId);
     if ($e->isSetOption("NO_TRACKBACK")) {
@@ -97,10 +96,7 @@ class Trackback {
     Trackback::cacheTrackbackList();
   }
 
-  /**
-   * static method
-   */
-  function cacheTrackbackList() {
+  static function cacheTrackbackList() {
     $filenames = array();
     $dirs = Soojung::queryFilenameMatch("/^[0-9]+$/", "contents/");
     foreach ($dirs as $dir) {
@@ -114,10 +110,7 @@ class Trackback {
     return fwrite(fopen('contents/.trackbackList', w), implode("\n", $filenames));
   }
 
-  /**
-   * static method
-   */
-  function getRecentTrackbacks($count=10) {
+  static function getRecentTrackbacks($count=10) {
     if (file_exists('contents/.trackbackList') === false) {
       Trackback::cacheTrackbackList();
     }
@@ -132,10 +125,7 @@ class Trackback {
     return $trackbacks;
   }
 
-  /**
-   * static method
-   */
-  function sendTrackbackPing($entryId, $trackbackUrl, $encoding="UTF-8") {
+  static function sendTrackbackPing($entryId, $trackbackUrl, $encoding="UTF-8") {
     global $blog_name;
   
     $tb_url = parse_url($trackbackUrl);

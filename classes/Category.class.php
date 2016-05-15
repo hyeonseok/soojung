@@ -54,10 +54,7 @@ class Category {
     return Soojung::queryNumFilenameMatch($query);
   }
 
-  /**
-   * static method
-   */
-  function getCategoryList() {
+  static function getCategoryList() {
     $categories = $categoryentries = array();
     $filenames = Entry::getEntryList("/^[0-9].+[.]entry$/");
     foreach($filenames as $filename) {

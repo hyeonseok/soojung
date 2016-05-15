@@ -2,9 +2,6 @@
 
 class Export {
 
-  /**
-   * static method
-   */
   function export() {
     $xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
     $xml .= "<soojung>\n";
@@ -13,10 +10,7 @@ class Export {
     return $xml;
   }
 
-  /**
-   * private, static method
-   */
-  function toXml($path) {
+  private static function toXml($path) {
     if ($dh = opendir($path)) {
       while (($file = readdir($dh)) !== false) {
 	if ($file == ".." || $file == "." || $file == 'upload') {
@@ -35,10 +29,7 @@ class Export {
     return $xml;
   }
 
-  /**
-   * private, static method
-   */
-  function fileToXml($filename) {
+  private static function fileToXml($filename) {
     $fd = fopen($filename, "rb");
     $data = fread($fd, filesize($filename));
     $data = htmlspecialchars($data);

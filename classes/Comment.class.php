@@ -47,10 +47,7 @@ class Comment {
     return $body;
   }
 
-  /**
-   * static method
-   */
-  function writeComment($entryId, $name, $email, $homepage, $body, $date) {
+  static function writeComment($entryId, $name, $email, $homepage, $body, $date) {
     $e = Entry::getEntry($entryId);
     if ($e->isSetOption("NO_COMMENT")) {
       return;
@@ -78,10 +75,7 @@ class Comment {
     Comment::cacheCommentList();
   }
 
-  /**
-   * static method
-   */
-  function cacheCommentList() {
+  static function cacheCommentList() {
     $comment_filenames = array();
     $dirs = Soojung::queryFilenameMatch("/^[0-9]+$/", "contents/");
     foreach ($dirs as $dir) {
@@ -95,10 +89,7 @@ class Comment {
     return fwrite(fopen('contents/.commentList', 'w'), implode("\n", $comment_filenames));
   }
 
-  /**
-   * static method
-   */
-  function getRecentComments($count=10) {
+  static function getRecentComments($count=10) {
     if (file_exists('contents/.commentList') === false) {
       Comment::cacheCommentList();
     }

@@ -2,10 +2,7 @@
 
 class Import {
 
-  /**
-   * static method
-   */
-  function importSoojung($uploadFile, $version) {
+  static function importSoojung($uploadFile, $version) {
     $fd = fopen($uploadFile['tmp_name'], "rb");
     $data = fread($fd, $uploadFile['size']);
     fclose($fd);
@@ -27,10 +24,7 @@ class Import {
     }
   }
 
-  /**
-   * static method
-   */
-  function importTatterTools($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding) {
+  static function importTatterTools($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding) {
     if (strcasecmp($encoding, 'UTF-8') == 0 || strcasecmp($encoding, 'UTF8') == 0) {
       $needtoconvert = FALSE;
     } else {
@@ -127,11 +121,8 @@ class Import {
     mysql_close($link);
   }
 
-  /**
-   * static method
-   */
   /* TODO : seperate comment and trackback of each blog */
-  function importWordPress($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding) {
+  static function importWordPress($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding) {
     $link = mysql_connect($dbServer, $dbUser, $dbPass) or die("could not connect");
     mysql_select_db($dbName) or die("could not select database");
 
@@ -226,10 +217,7 @@ class Import {
     mysql_close($link);
   }
 
-  /**
-   * static method
-   */
-  function importB2($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding) {
+  static function importB2($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding) {
     $link = mysql_connect($dbServer, $dbUser, $dbPass) or die("could not connect");
     mysql_select_db($dbName) or die("could not select database");
 
@@ -284,10 +272,7 @@ class Import {
     mysql_close($link);
   }
 
-  /**
-   * static method
-   */
-  function importZeroboard($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding, $boardId) {
+  static function importZeroboard($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding, $boardId) {
     if (!$boardId)
       die ("please specify the board id");
 
@@ -344,10 +329,7 @@ class Import {
     mysql_close($link);
   }
 
-  /**
-   * private, static method
-   */
-  function createFile($xml) {
+  private static function createFile($xml) {
     $name = Import::getNameFromXml($xml);
 
     $dir = dirname($name);

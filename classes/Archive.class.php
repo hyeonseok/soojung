@@ -58,20 +58,14 @@ class Archive {
     return Soojung::queryNumFilenameMatch($pattern);
   }
 
-  /**
-   * static method
-   */
-  function getArchive($name) {
+  static function getArchive($name) {
     $year = intval(substr($name, 0, 4));
     $month = intval(substr($name, 4, 2));
     $day = intval(substr($name, 6, 2));
     return new Archive($year, $month, $day);
   }
 
-  /**
-   * static method
-   */
-  function getArchiveList() {
+  static function getArchiveList() {
     $archives = array();
     $files = array();
     $filenames = Entry::getEntryList("/^[0-9].+[.]entry$/");
