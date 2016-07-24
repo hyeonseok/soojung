@@ -173,6 +173,9 @@ class Entry {
 
   public static function getEntry($entryId) {
     $filename = Soojung::entryIdToFilename($entryId);
+    if ($filename === null) {
+      return null;
+    }
     return new Entry($filename);
   }
 

@@ -38,7 +38,7 @@ class Soojung {
 
   public static function entryIdToFilename($entryId) {
     $f = Entry::getEntryList("/_" . $entryId . "[.]entry$/", 1);
-    return $f[0];
+    return isset($f[0]) ? $f[0] : null;
   }
 
   public static function filenameToEntryId($filename) {
