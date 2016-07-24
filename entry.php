@@ -43,6 +43,10 @@ $blogid = $_GET["blogid"];
 $template = new UserTemplate('entry.tpl', $blogid);
 if (!$template->is_cached('entry.tpl', $blogid)) {
   $entry = Entry::getEntry($blogid);
+  if ($_SERVER['REQUEST_URI'] != $entry->getHref()) {
+    header('Location: ' . $entry->getHref());
+    exit();
+  }
   if ($entry->isSetOption("SECRET")) {
     exit;
   }
