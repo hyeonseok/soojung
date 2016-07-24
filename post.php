@@ -5,7 +5,7 @@ session_start();
 include("config.php");
 include("settings.php");
 
-if ($_POST["mode"] == "login") {
+if (isset($_POST["mode"]) && $_POST["mode"] == "login") {
   if (md5($_POST["password"]) == $admin_password)
     $_SESSION['auth'] = TRUE;
   $_POST["mode"] = $_POST["original_mode"];
@@ -37,11 +37,11 @@ if (!isset($_SESSION["auth"])) {
   exit;
 }
 
-if ($_POST["mode"] == "upload") {
+if (isset($_POST["mode"]) && $_POST["mode"] == "upload") {
   echo "upload:";
   print_r($_FILES);
   die();
-} else if ($_POST["mode"] == "Post") {
+} else if (isset($_POST["mode"]) && $_POST["mode"] == "Post") {
   $title =  $_POST["title"];
   $format = $_POST["format"];
   $formatter = Soojung::getFormatter($format);
