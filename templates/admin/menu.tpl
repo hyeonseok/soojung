@@ -1,7 +1,7 @@
 <div id="menu">
 
 <div class="menu_item">
-<a href="{$baseurl}/index.php">Home</a>
+<a href="{$baseurl}/">Home</a>
 </div>
 
 <div class="menu_item">
