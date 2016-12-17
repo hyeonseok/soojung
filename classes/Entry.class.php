@@ -69,6 +69,11 @@ class Entry {
     }
   }
 
+  function getFullHref() {
+      $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    return $protocol . $_SERVER['HTTP_HOST'] . $this->getHref();
+  }
+
   function getRawBody() {
     if (empty($this->filename)) {
       return 'Data does not exists.';
@@ -91,6 +96,54 @@ class Entry {
     $body = $this->getRawBody();
     $formatter = Soojung::getFormatter($this->format);
     return $formatter->toHtml($body);
+  }
+
+  function getAmpBody() {
+    return Formatter::toAmp($this->getBody());
+  }
+
+  function getMajorImage() {
+    $html = $this->getBody();
+    $images = array();
+    preg_match("/<img[\S\s]*width=\"([\S]*)\"/", $html, $width);
+    preg_match("/<img[\S\s]*height=\"([\S]*)\"/", $html, $height);
+    preg_match("/<img[\S\s]*src=\"([\S]*)\"/", $html, $src);
+    if (isset($width[1]) && isset($height[1])) {
+      $images[] = array(
+        'src' => $src[1], 
+        'width' => $width[1], 
+        'height' => $height[1]
+      );
+    } else if (isset($src[1]) && strpos($src[1], '/soojung/contents/upload/') === 0) {
+      $size = getimagesize(urldecode($_SERVER['DOCUMENT_ROOT'] . $src[1]));
+      $images[] = array(
+        'src' => 'https://hyeonseok.com' . $src[1], 
+        'width' => $size[0], 
+        'height' => $size[1]
+      );
+    }
+    $max_width = 0;
+    foreach ($images as $value) {
+      if (!isset($image) && $value['height'] > 696) {
+        $image = $value;
+      }
+      if ($value['height'] > $max_width) {
+        $large = $value;
+      }
+    }
+    if (!isset($image) && isset($large)) {
+      $image = $large;
+    }
+    if (!isset($image)) {
+      $image = array(
+        'src' => 'https://hyeonseok.com/home/images/copy.png', 
+        'width' => 664, 
+        'height' => 237
+      );
+    }
+    $this->image_src = $image['src'];
+    $this->image_width = $image['width'];
+    $this->image_height = $image['height'];
   }
 
   function getCommentCount() {
