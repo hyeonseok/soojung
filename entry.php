@@ -1,4 +1,11 @@
 <?php
+if (!isset($_GET['blogid'])) {
+  exit();
+}
+if (isset($_GET['blogid']) && !is_numeric($_GET['blogid'])) {
+  exit();
+}
+
 include_once("settings.php");
 
 if (isset($_POST["blogid"])) {
@@ -32,9 +39,6 @@ if (isset($_POST["blogid"])) {
   $temp = new UserTemplate("entry.tpl", $blogid);
   $temp->clearCache();
   header("Location: " . $entry->getHref() . "#CO" . $t);
-  exit;
-} else if (isset($_GET["blogid"]) == false) {
-  echo "<meta http-equiv='refresh' content='0;URL=index.php'>";
   exit;
 }
 
