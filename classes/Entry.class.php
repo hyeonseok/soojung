@@ -179,6 +179,11 @@ class Entry {
     return new Entry($filename);
   }
 
+  public static function exists($entryId) {
+    $filename = Soojung::entryIdToFilename($entryId);
+    return $filename !== null;
+  }
+
   private static function _getQuery($hide) {
     if ($hide == false) {
       $query = "/[.]entry$/";

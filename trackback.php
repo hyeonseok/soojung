@@ -1,10 +1,27 @@
 <?php
+if (!isset($_REQUEST['blogid'])) {
+  $error = 'blogid is required.';
+}
+if (isset($_GET['__mode']) && $_GET['__mode'] !== 'rss') {
+  $error = '__mode should be rss.';
+}
+if (!isset($_GET['__mode']) && !isset($_GET['url'])) {
+  $error = 'url is required.';
+}
 
 include_once("settings.php");
 
+if (!Entry::exists($_REQUEST["blogid"])) {
+  $error = 'Article not found.';
+}
+
 header("Content-type: text/xml");
 
-if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
+if (isset($error)) {
+  exit('<?xml version="1.0" encoding="utf-8"?><response><error>1</error><message>' . $error . '</message></response>');
+}
+
+if (isset($_GET['__mode'])) {
   $blogid = $_GET["blogid"];
   $entry = Entry::getEntry($blogid);
 
@@ -30,7 +47,7 @@ if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
   exit;
 }
 
-if (isset($_REQUEST["url"]) && isset($_REQUEST["blogid"]) && Entry::exists($_REQUEST["blogid"])) {
+if (isset($_REQUEST["url"])) {
   $id = $_REQUEST["blogid"];
   $url = $_REQUEST["url"];
   $title = stripslashes($_REQUEST["title"]);
@@ -42,27 +59,13 @@ if (isset($_REQUEST["url"]) && isset($_REQUEST["blogid"]) && Entry::exists($_REQ
   $excerpt = convert_to_utf8($excerpt);
   $name = convert_to_utf8($name);
   
-  if (empty($url)) {
-    echo '<?xml version="1.0" encoding="iso-8859-1"?>' . "\n";
-    echo "<response>\n";
-    echo "<error>1</error>\n";
-    echo "<message>url is required</message>\n";
-    echo "</response>\n";
-  } else {
     Trackback::writeTrackback($id, $url, $name, $title, $excerpt);
     $temp = new Usertemplate("index.tpl", 1);
     $temp->clearCache();
-    echo '<?xml version="1.0" encoding="iso-8859-1"?>' . "\n";
+    echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
     echo "<response>\n";
     echo "<error>0</error>\n";
     echo "</response>\n";
-  }
-} else {
-  echo '<?xml version="1.0" encoding="iso-8859-1"?>' . "\n";
-  echo "<response>\n";
-  echo "<error>1</error>\n";
-  echo "<message>blogid is required. trackback.php?blogid=N form.</message>\n";
-  echo "</response>\n";
 }
 
 # vim: ts=8 sw=2 sts=2 noet
